@@ -18,7 +18,7 @@ class Goods {
   var name;
   var img;
   int id, num, categoryId, categoryColor;
-  double price;
+  var price;
   var tax;
   var discount;
   var localRate;

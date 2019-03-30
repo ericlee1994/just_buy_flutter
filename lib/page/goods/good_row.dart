@@ -9,7 +9,7 @@ class GoodsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+
     return GestureDetector(
       onTap: () {},
       child: Column(
@@ -48,20 +48,20 @@ class GoodsRow extends StatelessWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: <Widget>[
-                                  Text(goods.categoryName,
+                                  Text(goods.price.toString(),
                                   style: TextStyle(
                                     color: Colors.grey,
                                     fontSize: 14.0
                                   )),
-                                  Container(
-                                    margin: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                    width: 8.0,
-                                    height: 8.0,
-                                    child: CircleAvatar(
-                                      backgroundColor: Color(goods.categoryColor),
-                                    ),
-                                  )
+//                                  Container(
+//                                    margin: const EdgeInsets.symmetric(
+//                                      horizontal: 8.0),
+//                                    width: 8.0,
+//                                    height: 8.0,
+//                                    child: CircleAvatar(
+//                                      backgroundColor: Color(goods.categoryColor),
+//                                    ),
+//                                  )
                                 ],
                               ),
                             ],

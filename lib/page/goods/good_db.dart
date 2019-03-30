@@ -26,6 +26,8 @@ class GoodDB {
     List<Goods> goods = List();
     for (Map<String, dynamic> item in result) {
       var myGood = Goods.fromMap(item);
+//      myGood.categoryName = item[Category.dbName];
+//      myGood.categoryColor = item[Category.dbColorCode];
       myGood.categoryName = item[Category.dbName];
       myGood.categoryColor = item[Category.dbColorCode];
       goods.add(myGood);
@@ -34,15 +36,26 @@ class GoodDB {
   }
 
   Future updateGood(Goods good) async {
+    String a;
+    a = 'INSERT OR REPLACE INTO '
+        '${Goods.tblGood}(${Goods.dbId},${Goods.dbName},${Goods.dbCategoryID},${Goods.dbTax},'
+        '${Goods.dbPrice},${Goods.dbDiscount},${Goods.dbBuyTime},${Goods.dbOwner},'
+        '${Goods.dbRemark},${Goods.dbImg},${Goods.dbLocalRate},${Goods.dbNum})'
+        ' VALUES(${good.id},"${good.name}",${good.categoryId},${good.tax},'
+        '${good.price},${good.discount},${good.time},"${good.owner}",'
+        '"${good.remark}","${good.img}",${good.localRate},${good.num})';
+    print(a);
     var db = await _appDatabase.getDb();
     await db.transaction((Transaction txn) async {
+
       int id = await txn.rawInsert('INSERT OR REPLACE INTO '
           '${Goods.tblGood}(${Goods.dbId},${Goods.dbName},${Goods.dbCategoryID},${Goods.dbTax},'
           '${Goods.dbPrice},${Goods.dbDiscount},${Goods.dbBuyTime},${Goods.dbOwner},'
           '${Goods.dbRemark},${Goods.dbImg},${Goods.dbLocalRate},${Goods.dbNum})'
-          ' VALUES(${good.id},${good.name},${good.categoryId},${good.tax},'
-          '${good.price},${good.discount},${good.time},${good.owner},'
-          '${good.remark},${good.img},${good.localRate},${good.num})');
+          ' VALUES(${good.id},"${good.name}",${good.categoryId},${good.tax},'
+          '${good.price},${good.discount},${good.time},"${good.owner}",'
+          '"${good.remark}","${good.img}",${good.localRate},${good.num})');
+
     });
   }
 

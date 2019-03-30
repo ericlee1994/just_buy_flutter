@@ -150,8 +150,11 @@ class AddGoodScreen extends StatelessWidget {
                 stream: createGoodBloc.selectedCategory,
                 initialData: Category.getUndefined(),
                 builder: (context, snapshot) => Text(snapshot.data.name),
+
             ),
-            onTap: (){_showCategoryDialog(createGoodBloc, context);}
+            onTap: (){
+
+              _showCategoryDialog(createGoodBloc, context);}
           )
         ],
       ),
@@ -203,6 +206,7 @@ class AddGoodScreen extends StatelessWidget {
         },
       ));
     });
+    return categories;
   }
 
 

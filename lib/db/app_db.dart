@@ -23,6 +23,7 @@ class AppDatabase {
 
   Future<Database> getDb() async {
     if (!didInit) await _init();
+    print("getdb");
     return _dataBase;
   }
 
@@ -47,11 +48,11 @@ class AppDatabase {
         "${Goods.dbId} INTEGER PRIMARY KEY AUTOINCREMENT,"
         "${Goods.dbName} TEXT,"
         "${Goods.dbImg} TEXT,"
-        "${Goods.dbNum} LONG,"
-        "${Goods.dbPrice} LONG,"
-        "${Goods.dbTax} LONG,"
-        "${Goods.dbDiscount} LONG,"
-        "${Goods.dbLocalRate} LONG,"
+        "${Goods.dbNum} INTEGER,"
+        "${Goods.dbPrice} Single,"
+        "${Goods.dbTax} Single,"
+        "${Goods.dbDiscount} Single,"
+        "${Goods.dbLocalRate} Single,"
         "${Goods.dbBuyTime} LONG,"
         "${Goods.dbOwner} TEXT,"
         "${Goods.dbRemark} TEXT,"
@@ -68,6 +69,12 @@ class AppDatabase {
           "${Category.dbColorName} TEXT,"
           "${Category.dbColorCode} INTEGER);"
       );
+      for (var x in Category.allCategory()){
+        txn.rawInsert('INSERT INTO '
+        '${Category.tblCategory}(${Category.dbId},${Category.dbName},${Category.dbColorName},${Category.dbColorCode},${Category.dbImg})'
+        ' VALUES(' + x.id.toString() + ', "' + x.name + '", ' + '"' + x.colorName + '",' + x.colorValue.toString() + ',"' + x.image + '"'+ ');');
+      }
+
     });
   }
 }

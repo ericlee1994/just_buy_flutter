@@ -30,7 +30,18 @@ class CategoryBloc implements BlocBase {
   }
 
   void createCategory(Category category) {
-    _categoryDB.insertOrReplace(category);
+    _categoryDB.insertOrReplace(category).then((value) {
+      if (value == null) return;
+      _loadCategory();
+    });
+  }
+
+  void refresh(){
+    _loadCategory();
+  }
+
+  void updateColorSelection(ColorPalette colorPalette) {
+    _colorController.sink.add(colorPalette);
   }
 
   @override

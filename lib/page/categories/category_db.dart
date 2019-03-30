@@ -30,7 +30,7 @@ class CategoryDB {
     await db.transaction((Transaction txn) async {
       await txn.rawInsert('INSERT OR REPLACE INTO '
         '${Category.tblCategory}(${Category.dbId},${Category.dbName},${Category.dbImg},${Category.dbColorCode},${Category.dbColorName})'
-      ' VALUES(${category.id},"${category.name},"${category.image}",${category.colorValue},"${category.colorName}")');
+      ' VALUES(${category.id},"${category.name}","${category.image}",${category.colorValue},"${category.colorName}")');
     });
   }
 

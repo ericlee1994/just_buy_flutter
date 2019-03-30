@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:just_buy_flutter/page/categories/category.dart';
 import 'package:just_buy_flutter/page/ListPage.dart';
+import 'package:just_buy_flutter/page/goods/models/banner.dart';
+import 'package:just_buy_flutter/page/side_drawer.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,9 +14,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          leading: new IconButton(
-              icon: const Icon(Icons.menu, color: Colors.white),
-              onPressed: null),
+//          leading: new IconButton(
+//              icon: const Icon(Icons.menu, color: Colors.white),
+//              onPressed: null),
           title: Text('Just Buy'),
           actions: <Widget>[
             new IconButton(
@@ -59,6 +61,7 @@ class MyApp extends StatelessWidget {
                     new Expanded(child: new MyGridView())
                   ],
                 ))),
+        drawer: SideDrawer(),
       ),
     );
   }
@@ -125,3 +128,4 @@ void _goListPage(BuildContext context, Category category) {
     return new ListPage(category);
   }));
 }
+

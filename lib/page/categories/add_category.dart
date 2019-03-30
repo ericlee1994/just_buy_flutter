@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:just_buy_flutter/bloc/bloc_provider.dart';
 import 'package:just_buy_flutter/page/categories/category.dart';
 import 'package:just_buy_flutter/page/categories/category_bloc.dart';
+import 'package:just_buy_flutter/utils/collapsable_expand_tile.dart';
 import 'package:just_buy_flutter/utils/color_utils.dart';
 
 class AddCategory extends StatelessWidget {
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
+  final expansionTile = GlobalKey<CollapsibleExpansionTileState>();
 
   @override
   Widget build(BuildContext context) {
@@ -51,19 +53,50 @@ class AddCategory extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 4.0),
             child: StreamBuilder(
-                stream: _categoryBloc.colorSelection,
-                initialData: ColorPalette("Black", Colors.black.value),
-                builder: (context, snapshot) {
-                  colorPalette = snapshot.data;
-//                  return CollapsibleExpansionTile(
-//                    key:,
-//                    leading: Container(
-//                    )
-//                  );
-                }),
+              stream: _categoryBloc.colorSelection,
+              initialData: ColorPalette("Grey", Colors.grey.value),
+              builder: (context, snapshot) {
+                colorPalette = snapshot.data;
+                return CollapsibleExpansionTile(
+                  key: expansionTile,
+                  leading: Container(
+                    width: 12.0,
+                    height: 12.0,
+                    child: CircleAvatar(
+                      backgroundColor: Color(snapshot.data.colorValue),
+                    ),
+                  ),
+                  title: Text(snapshot.data.colorName),
+                  children: buildMaterialColors(_categoryBloc),
+                );
+              },
+            ),
           )
         ],
       ),
     );
+  }
+
+  List<Widget> buildMaterialColors(CategoryBloc categoryBloc) {
+    List<Widget> projectWidgetList = List();
+    colorsPalettes.forEach((colors) {
+      projectWidgetList.add(ListTile(
+        leading: Container(
+          width: 12.0,
+          height: 12.0,
+          child: CircleAvatar(
+            backgroundColor: Color(colors.colorValue),
+          ),
+        ),
+        title: Text(colors.colorName),
+        onTap: () {
+          expansionTile.currentState.collapse();
+          categoryBloc.updateColorSelection(
+            ColorPalette(colors.colorName, colors.colorValue),
+          );
+        },
+      ));
+    });
+    return projectWidgetList;
   }
 }

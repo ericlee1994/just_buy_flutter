@@ -24,6 +24,7 @@ class AddGoodBloc implements BlocBase {
   String updateGoodOwner;
   String updateGoodRemark;
 
+
   BehaviorSubject<Category> _categorySelection = BehaviorSubject<Category>();
 
   Stream<Category> get selectedCategory => _categorySelection.stream;
@@ -37,11 +38,8 @@ class AddGoodBloc implements BlocBase {
   Stream<int> get dueDateSelected => _dueDateSelected.stream;
 
   Observable<String> createGood() {
-    print("123");
     return Observable.zip2(selectedCategory, dueDateSelected,
     (Category category, int dueDateSelected) {
-      print("321");
-      print(dueDateSelected + dueDateSelected);
       var good = Goods.create(
         name: updateGoodName,
         num: updateGoodNum,
@@ -67,6 +65,7 @@ class AddGoodBloc implements BlocBase {
   void _loadCategories() {
     _categoryDB.getCategories().then((categories) {
       _categoryController.add(List.unmodifiable(categories));
+      print("_loadCategories" + categories.length.toString());
     });
   }
 
@@ -74,10 +73,12 @@ class AddGoodBloc implements BlocBase {
     _categorySelection.add(category);
   }
 
+
   @override
   void dispose() {
     _categorySelection.close();
     _dueDateSelected.close();
+    _categoryController.close();
   }
 
 }
